@@ -110,7 +110,8 @@ namespace PracticeWeb.Tests
             // Arrange
             int testOrderId = 1;
             var mock = new Mock<IOrder>();
-            mock.Setup(service => service.GetOrderById(testOrderId)).Returns(GetTestOrders()[0]);
+
+            mock.Setup(service => service.GetOrderById(testOrderId)).Returns(GetTestOrders().FirstOrDefault(o => o.Id == testOrderId));
             mock.Setup(service => service.DeleteOrder(It.IsAny<Order>())).Verifiable();
             var controller = new OrdersController(mock.Object);
             // Act
