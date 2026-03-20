@@ -66,9 +66,9 @@ namespace PracticeWeb.Tests
         {
             // Arrange
             var mock = new Mock<IOrder>();
-            mock.Setup(service => service.CreateOrder(It.IsAny<Order>())).Verifiable();
-            var controller = new OrdersController(mock.Object);
             var newOrder = new Order { Id = 3, Name = "Beer" };
+            mock.Setup(service => service.CreateOrder(newOrder)).Verifiable();
+            var controller = new OrdersController(mock.Object);
             // Act
             var result = controller.AddOrder(newOrder);
             // Assert
@@ -94,9 +94,9 @@ namespace PracticeWeb.Tests
         {
             // Arrange
             var mock = new Mock<IOrder>();
-            mock.Setup(service => service.UpdateOrder(It.IsAny<Order>())).Verifiable();
-            var controller = new OrdersController(mock.Object);
             var updatedOrder = new Order { Id = 1, Name = "Updated Chips" };
+            mock.Setup(service => service.UpdateOrder(updatedOrder)).Verifiable();
+            var controller = new OrdersController(mock.Object);
             // Act
             var result = controller.UpdateOrder(1, updatedOrder);
             // Assert
