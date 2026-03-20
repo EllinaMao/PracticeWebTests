@@ -110,18 +110,21 @@ namespace PracticeWeb.Tests
             // Arrange
             int testOrderId = 1;
             var mock = new Mock<IOrder>();
+            var deletedOrder = GetTestOrders().FirstOrDefault(o => o.Id == testOrderId);
 
-            mock.Setup(service => service.GetOrderById(testOrderId)).Returns(GetTestOrders().FirstOrDefault(o => o.Id == testOrderId));
-            mock.Setup(service => service.DeleteOrder(It.IsAny<Order>())).Verifiable();
+            mock.Setup(service => service.GetOrderById(testOrderId)).Returns(deletedOrder);
+            mock.Setup(service => service.DeleteOrder(deletedOrder)).Verifiable();
+
             var controller = new OrdersController(mock.Object);
             // Act
             var result = controller.DeleteOrder(testOrderId);
             // Assert
             Assert.IsType<OkResult>(result);
-            mock.Verify(s => s.DeleteOrder(It.IsAny<Order>()), Times.Once);
+            mock.Verify(s => s.DeleteOrder(deletedOrder), Times.Once);
         }
     }
 }
+
 
 /*
  Разработать контроллер для управления заказами (OrdersController) в ASP.NET Core Web Api и протестировать его с помощью xUnit.net и Moq.
